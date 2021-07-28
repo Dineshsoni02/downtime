@@ -1,0 +1,98 @@
+$size__site_content_width: 1024px;
+
+// /* Media Queries */ Not necessarily correct, edit these at will
+$media_queries: (
+  "mobile": "only screen and (max-width: 667px)",
+  "tablet":
+    "only screen and (min-width: 668px) and (max-width: $size__site_content_width)",
+  "desktop": "only screen and (min-width: ($size__site_content_width + 1))",
+  "retina2":
+    "only screen and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi)",
+  "retina3":
+    "only screen and (-webkit-min-device-pixel-ratio: 3) and (min-resolution: 288dpi)",
+  "landscape": "screen and (orientation:landscape) ",
+  "portrait": "screen and (orientation:portrait) ",
+);
+
+@mixin for_breakpoint($breakpoints) {
+  $conditions: ();
+  @each $breakpoint in $breakpoints {
+    // If the key exists in the map
+    $conditions: append(
+      $conditions,
+      #{inspect(map-get($media_queries, $breakpoint))},
+      comma
+    );
+  }
+
+  @media #{$conditions} {
+    @content;
+  }
+}
+
+.top_div {
+  width: fit-content !important;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  height: 75vh;
+  text-align: center;
+  padding: 0 15px;
+  // border: 2px solid red;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border-radius: 10px;
+  position: relative;
+  font-family: "Lato", cursive;
+  @include for_breakpoint(mobile) {
+    // width: 50% !important;
+  }
+  #header_text {
+    font-size: var(--font-large);
+    color: var(--temp-color);
+    padding: 10px;
+    background-color: rgba(0, 11, 18, 0.7);
+    background-color: rgba(0, 153, 255, 0.9);
+    width: 100%;
+    font-weight: 500;
+    position: absolute;
+    top: 10%;
+    left: 0;
+  }
+}
+
+input[type="text"],
+input[type="password"] {
+  color: var(--secondary-color);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.signin_footer-text {
+  span {
+    color: var(--primary-color);
+    padding: 6px;
+  }
+}
+
+.auth {
+  width: 100%;
+  margin: 0;
+  flex: 1;
+  @include for_breakpoint(mobile) {
+    
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: flex-end !important;
+  }
+}
+
+#top_grid{
+  @include for_breakpoint(mobile) { 
+    padding: 7px;
+  
+  }
+}

@@ -1,0 +1,191 @@
+$size__site_content_width: 1024px;
+
+// /* Media Queries */ Not necessarily correct, edit these at will
+$media_queries: (
+  "mobile": "only screen and (max-width: 667px)",
+  "tablet":
+    "only screen and (min-width: 668px) and (max-width: $size__site_content_width)",
+  "desktop": "only screen and (min-width: ($size__site_content_width + 1))",
+  "retina2":
+    "only screen and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi)",
+  "retina3":
+    "only screen and (-webkit-min-device-pixel-ratio: 3) and (min-resolution: 288dpi)",
+  "landscape": "screen and (orientation:landscape) ",
+  "portrait": "screen and (orientation:portrait) ",
+);
+
+@mixin for_breakpoint($breakpoints) {
+  $conditions: ();
+  @each $breakpoint in $breakpoints {
+    // If the key exists in the map
+    $conditions: append(
+      $conditions,
+      #{inspect(map-get($media_queries, $breakpoint))},
+      comma
+    );
+  }
+
+  @media #{$conditions} {
+    @content;
+  }
+}
+
+$background: #f5f6fa;
+$text: #9c9c9c;
+$input-bg-color: #fff;
+$input-text-color: #a3a3a3;
+// $button-bg-color: #6175f3;
+$button-bg-color: #0099ff;
+$button-text-color: #fff;
+$button-text-color: #edf8ff;
+
+//** root
+:root {
+  background: $background;
+  color: $text;
+  font: 1rem "PT Sans", sans-serif;
+}
+
+html,
+body,
+.container {
+  height: 100%;
+  width: 100%;
+}
+
+a {
+  color: inherit;
+  &:hover {
+    color: $button-bg-color;
+  }
+}
+
+//** helper
+
+.outer_div {
+  border: 1px solid blue;
+  width: 100%;
+  height: 90%;
+  margin-top: auto;
+  .upper_box{
+    @include for_breakpoint(mobile) {
+      height: 45vh !important;
+    }
+  }
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-color);
+    font-family: "Lato", cursive;
+    font-size: 1.3em;
+    @include for_breakpoint(mobile) {
+      // display: flex;
+      // color: var(--secondary-color);
+      flex-direction: column;
+      align-content: stretch;
+      padding: 5px;
+      flex-wrap: wrap;
+      align-items: center;
+      font-size: 1em;
+    }
+
+    .typing-demo {
+      font-size: 1.4em;
+      font-family: monospace;
+      width: 16em;
+      animation: typing 2s steps(20), blink 0.55s step-end infinite alternate;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid;
+      @include for_breakpoint(mobile) {
+        width: 15.5em;
+      }
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .container__item {
+      @include for_breakpoint(mobile) {
+        width: 90% !important;
+      }
+    }
+    .form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  
+  .uppercase {
+    text-transform: uppercase;
+  }
+
+  //** button
+  .btn {
+    display: inline-block;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    transition: all 200ms ease-in;
+    cursor: pointer;
+    z-index: 1;
+    &--primary {
+      background: $button-bg-color;
+      color: $button-text-color;
+      box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+      border-radius: 2px;
+      padding: 16px 36px;
+      
+      &:hover {
+        background: darken($button-bg-color, 8%);
+      }
+      
+      &:active {
+        background: $button-bg-color;
+        box-shadow: inset 0 0 10px 2px rgba(0, 0, 0, 0.2);
+      }
+    }
+    
+    &--inside {
+      margin-left: -96px;
+    }
+  }
+
+  //** form
+  .form {
+    &__field {
+      width: 100%;
+      background: #fff;
+      color: $input-text-color;
+      color: var(--primary-color);
+      font: inherit;
+      font-weight: 500;
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+      border: 0;
+      outline: 0;
+      padding: 22px 18px;
+      @include for_breakpoint(mobile) {font-size: 0.87em;}
+    }
+  }
+}
