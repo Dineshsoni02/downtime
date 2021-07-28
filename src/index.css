@@ -6,7 +6,7 @@
   font-family: "Lato", cursive;
   -webkit-tap-highlight-color: transparent;
 }
-  
+
 :root {
   --font-small: 12px;
   --font-medium: 16px;
@@ -14,8 +14,8 @@
   --font-larger: 36px;
   --font-gaint: 48px;
   --primary-color: #0099ff;
-  --secondary-color: #000B12;
-  --temp-color:#EDF8FF;
+  --secondary-color: #000b12;
+  --temp-color: #edf8ff;
 }
 
 body {

@@ -1,17 +1,78 @@
 import React from "react";
 import "./Details.scss";
-
-const Details = (details) => {
-  console.log(details.responseTime);
-  console.log(details.url);
-  console.log(details.statusCode);
-
+import DoneIcon from "@material-ui/icons/DoneOutline";
+import DownIcon from "@material-ui/icons/DesktopAccessDisabled";
+const Details = (props) => {
   return (
-    <div className="details">
-      {/* <p>{details.message}</p> */}
-      <h4>{details.url}</h4>
-      <h4>{details.statusCode}</h4>
-     
+    <div className="main_board_container">
+      <h2 style={{ padding: "10px" }}>
+        <a
+          href={props.url}
+          target="_blank"
+          rel="noreferrer noopener"
+          style={{ color: props.down ? "red" : "var(--primary-color)" }}
+        >
+          {props.name ? props.name.substr(0, 32) : ""}{" "}
+        </a>
+        status check
+      </h2>
+      {/* <hr /> */}
+      <div className="main_board">
+        <div className="board_left">
+          <div
+            style={{
+              padding: "18px",
+              margin: "8px auto",
+              borderRadius: "50%",
+              backgroundColor: `${props.down ? "red" : "var(--primary-color)"}`,
+              width: "fit-content",
+            }}
+          >
+            {props.down ? (
+              <DownIcon className="board_icon" />
+            ) : (
+              <DoneIcon className="board_icon" />
+            )}
+          </div>
+          {props.down ? <h3>Down</h3> : <h3>Up</h3>}
+        </div>
+        <div className="board_right">
+          <div className="board_right_item">
+            <p>Website name : </p>
+            <p style={{ marginLeft: "15px" }}>{props.name}</p>
+          </div>
+          <hr />
+          <div className="board_right_item">
+            <p>Status </p>
+            <p style={{ marginLeft: "15px" }}>{props.down ? "Down" : "Up"}</p>
+          </div>
+          <hr />
+          <div className="board_right_item">
+            <p>URL checked </p>
+            <p style={{ marginLeft: "15px" }}>{props.url}</p>
+          </div>
+          <hr />
+          <div className="board_right_item">
+            <p>Status Code</p>
+            <p style={{ marginLeft: "15px" }}>{props.statusCode}</p>
+          </div>
+          <hr />
+          <div className="board_right_item">
+            <p>Response Time </p>
+            <p style={{ marginLeft: "15px" }}>{props.responseTime}</p>
+          </div>
+        </div>
+      </div>
+      <h4
+        style={{
+          textAlign: "center",
+          marginTop: "10px",
+          marginBottom: "3px",
+          color: "var(--primary-color)",
+        }}
+      >
+        {props.message}
+      </h4>
     </div>
   );
 };

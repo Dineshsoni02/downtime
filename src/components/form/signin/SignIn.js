@@ -52,6 +52,9 @@ const SignIn = (props) => {
     })
       .then(async (resp) => {
         const data = await resp.json();
+        if (!data.status) {
+          return;
+        }
         console.log(data);
         data.status
           ? toast.success(data.message + "✌")
