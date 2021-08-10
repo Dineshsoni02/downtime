@@ -1,14 +1,18 @@
 import "./App.scss";
 import { Toaster } from "react-hot-toast";
-
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import Homepage from "./components/homepage/Homepage";
 import Header from "./components/homepage/header/Header";
 import Authentication from "./components/form/Authentication";
-// import SignIn from "./components/form/signin/SignIn";
-// import SignUp from "./components/form/signup/SignUp";
-// import newbutton from "./components/button/newbutton";
-function App() {
+import Dashboard from "./components/Dashboard/Dashboard";
+import { connect } from "react-redux";
+
+function App(props) {
   return (
     <div className="App">
       <Toaster />
@@ -25,14 +29,24 @@ function App() {
       </svg>
       <Router>
         <Header />
-
+        {/* <Dashboard /> */}
         <Switch>
           <Route path="/" exact component={Homepage} />
-          <Route path="/auth" exact component={Authentication} />
+          <Route path="/auth">
+            {props.Auth ? <Redirect to="/" /> : <Authentication />}
+          </Route>
+          <Route path="/dashboard">
+            {props.Auth ? <Dashboard /> : <Redirect to="/auth" />}
+          </Route>
         </Switch>
       </Router>
     </div>
   );
 }
+const mapStatetoProps = (state) => {
+  return {
+    Auth: state.Auth,
+  };
+};
 
-export default App;
+export default connect(mapStatetoProps)(App);

@@ -1,16 +1,34 @@
-// const initialState = {
-//     isAuth:false,
-    
-// }
+const userData = JSON.parse(localStorage.getItem("downTime")) || {};
 
-// const reducer= (state = initialState, { type, payload }) => {
-//     switch (type) {
+const initialState = {
+  Auth: userData._id ? true : false,
+  uid: userData._id,
+  name: userData.name,
+  email: userData.email,
+};
 
-//     case :
-//         return { ...state, ...payload }
-
-//     default:
-//         return state
-//     }
-// }
-// export default reducer;
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "LOGIN": {
+      const myState = { ...state };
+      myState.Auth = true;
+      myState.uid = action.uid;
+      myState.name = action.name;
+      myState.email = action.email;
+      return myState;
+    }
+    case "LOGOUT": {
+      const myState = { ...state };
+      myState.auth = false;
+      myState.name = "";
+      myState.id = "";
+      myState.email = "";
+      localStorage.removeItem("downTime");
+      return myState;
+    }
+    default:
+      const myState = { ...state };
+      return myState;
+  }
+};
+export default reducer;

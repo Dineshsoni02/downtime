@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import toast from "react-hot-toast";
 import "./SignUp.scss";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,10 +58,12 @@ const SignUp = (props) => {
         if (!data.status) {
           return;
         }
+        props.loginAction(data.data);
         console.log(data);
         data.status
           ? toast.success(data.message + "✌")
           : toast.error(data.message);
+        // history.push('/signin');
       })
       .catch((err) => {
         toast.error("error connecting to the server!!!");
@@ -72,7 +75,15 @@ const SignUp = (props) => {
   };
 
   return (
-    <Grid container item sm={12} lg={12} xs={6} className={classes.root} id="top_grid">
+    <Grid
+      container
+      item
+      sm={12}
+      lg={12}
+      xs={6}
+      className={classes.root}
+      id="top_grid"
+    >
       <form className="top_div" onSubmit={handleSubmit}>
         <span id="header_text">Sign up</span>
         <TextField
@@ -112,23 +123,38 @@ const SignUp = (props) => {
             Signup
           </Button>
         </div>
-        
-        <p className="signin_footer-text">
-        Already a member?
-        <span
-          onClick={(e) => {
-            props.changeForm("signin");
-          }}
-          style={{ cursor: "pointer"}}
-        >
-         Login
-        </span>
-      </p>
 
+        <p className="signin_footer-text">
+          Already a member?
+          <span
+            onClick={(e) => {
+              props.changeForm("signin");
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            Login
+          </span>
+        </p>
       </form>
     </Grid>
   );
 };
+const mapStateToProps = (state) => {
+  return {
+    Auth: state.Auth,
+  };
+};
+const mapDispetchToProps = (dispatch) => {
+  return {
+    loginAction: (data) => {
+      dispatch({
+        type: "LOGIN",
+        uid: data._id,
+        name: data.name,
+        email: data.email,
+      });
+    },
+  };
+};
 
-
-export default SignUp;
+export default connect(mapStateToProps, mapDispetchToProps)(SignUp);

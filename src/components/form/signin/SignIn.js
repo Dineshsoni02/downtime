@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import toast from "react-hot-toast";
 import { Grid, makeStyles } from "@material-ui/core";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,8 +31,6 @@ const SignIn = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
-
     if (!email || !password) {
       toast.error("all fields are necessary");
       return;
@@ -55,6 +54,9 @@ const SignIn = (props) => {
         if (!data.status) {
           return;
         }
+        localStorage.setItem("downTime", JSON.stringify(data.data));
+        props.loginAction(data.data);
+
         console.log(data);
         data.status
           ? toast.success(data.message + "✌")
@@ -63,13 +65,19 @@ const SignIn = (props) => {
       .catch((err) => {
         toast.error("error connecting to the server!!!");
       });
-
     setEmail("");
     setPassword("");
   };
-
   return (
-    <Grid container item sm={12} lg={12} xs={6} className={classes.root} id="top_grid" >
+    <Grid
+      container
+      item
+      sm={12}
+      lg={12}
+      xs={6}
+      className={classes.root}
+      id="top_grid"
+    >
       <form className="top_div" onSubmit={handleSubmit}>
         <span id="header_text">Login</span>
         <TextField
@@ -99,7 +107,7 @@ const SignIn = (props) => {
             onClick={() => {
               props.changeForm("signup");
             }}
-            style={{ cursor: "pointer"}}
+            style={{ cursor: "pointer" }}
           >
             Signup
           </span>
@@ -109,4 +117,22 @@ const SignIn = (props) => {
   );
 };
 
-export default SignIn;
+const mapStateToProps = (state) => {
+  return {
+    Auth: state.Auth,
+  };
+};
+const mapDispetchToProps = (dispatch) => {
+  return {
+    loginAction: (data) => {
+      dispatch({
+        type: "LOGIN",
+        uid: data._id,
+        name: data.name,
+        email: data.email,
+      });
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispetchToProps)(SignIn);

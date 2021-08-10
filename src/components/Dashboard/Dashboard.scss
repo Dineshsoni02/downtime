@@ -1,0 +1,190 @@
+.dashboard_main {
+  height: 90vh;
+  width: 100%;
+  margin-top: auto;
+
+    input,
+    span,
+    label,
+    textarea {
+      font-family: "Ubuntu", sans-serif;
+      // display: block;
+      // margin: 10px;
+      // padding: 5px;
+      border: none;
+      font-size: var(--font-medium);
+    }
+    label{
+      color: var(--temp-color);
+      padding: 5px;
+      font-weight: 600;
+    }
+    textarea:focus,
+    input:focus {
+      outline: 0;
+    }
+    /* Question */
+
+  input.question,
+  textarea.question {
+    font-size: var(--font-large);
+    font-weight: 300;
+    border-radius: 2px;
+    margin: 0;
+    border: none;
+    width: 80%;
+    background: rgba(0, 0, 0, 0);
+    transition: padding-top 0.2s ease, margin-top 0.2s ease;
+    overflow-x: hidden; /* Hack to make "rows" attribute apply in Firefox. */
+  }
+  /* Underline and Placeholder */
+
+  input.question + label,
+  textarea.question + label {
+    display: block;
+    position: relative;
+    white-space: nowrap;
+    padding: 0;
+    margin: 0;
+    width: 10%;
+    border-top: 1px solid red;
+    -webkit-transition: width 0.4s ease;
+    transition: width 0.4s ease;
+    height: 0px;
+  }
+
+  input.question:focus + label,
+  textarea.question:focus + label {
+    width: 80%;
+  }
+
+  input.question:focus,
+  input.question:valid {
+    padding-top: 35px;
+  }
+
+  textarea.question:valid,
+  textarea.question:focus {
+    margin-top: 35px;
+  }
+
+  input.question:focus + label > span,
+  input.question:valid + label > span {
+    top: -100px;
+    font-size: 22px;
+    color: #333;
+    font-size: var(--font-large);
+  }
+
+  textarea.question:focus + label > span,
+  textarea.question:valid + label > span {
+    top: -150px;
+    font-size: 22px;
+    color: #333;
+    font-size: var(--font-large);
+  }
+
+  input.question:valid + label,
+  textarea.question:valid + label {
+    border-color: green;
+  }
+
+  input.question:invalid,
+  textarea.question:invalid {
+    box-shadow: none;
+  }
+
+  input.question + label > span,
+  textarea.question + label > span {
+    font-weight: 300;
+    margin: 0;
+    position: absolute;
+    color: #8f8f8f;
+    top: -46px;
+    font-size: var(--font-larger);
+    left: 0px;
+    z-index: -1;
+    -webkit-transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+    transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+  }
+
+  button.save_button {
+    -webkit-transition: opacity 0.2s ease, background 0.2s ease;
+    transition: opacity 0.2s ease, background 0.2s ease;
+    display: block;
+    opacity: 0;
+    margin: 10px 0 0 0;
+    // padding: 1px;
+    cursor: pointer;
+    background-color: rgb(165, 146, 146);
+    width: 5rem;
+    
+  }
+
+  button.save_button:hover {
+    background: var(--primary-color);
+  }
+
+  button.save_button:active {
+    background: #999;
+    background: var(--temp-color);
+  }
+
+  input.question:valid ~ button.save_button,
+  textarea.question:valid ~ button.save_button {
+    -webkit-animation: appear 1s forwards;
+    animation: appear 1s forwards;
+  }
+
+  input.question:invalid ~ button.save_button,
+  textarea.question:invalid ~ button.save_button {
+    display: none;
+  }
+
+  @-webkit-keyframes appear {
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes appear {
+    100% {
+      opacity: 1;
+    }
+  }
+
+  button.logout_btn {
+    z-index: 1;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    border-radius: 3rem;
+    font-size: inherit;
+    font-family: inherit;
+    color: var(--temp-color);
+    padding: 1.2em 2.4em;
+    outline: none;
+    border: none;
+    background-color: var(--primary-color);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(20px);
+  }
+
+  button.logout_btn::after {
+    content: "";
+    z-index: -1;
+    background-color: hsla(203, 100%, 96%, 0.2);
+    position: absolute;
+    top: -50%;
+    bottom: -50%;
+    width: 1.25em;
+    transform: translate3d(-550%, 0, 0) rotate(35deg);
+  }
+
+  button.logout_btn:hover::after {
+    transition: transform 0.45s ease-in-out;
+    transform: translate3d(220%, 0, 0) rotate(35deg);
+  }
+}

@@ -6,7 +6,9 @@
   font-family: "Lato", cursive;
   -webkit-tap-highlight-color: transparent;
 }
-
+  html{
+    scroll-behavior: smooth;
+  }
 :root {
   --font-small: 12px;
   --font-medium: 16px;
